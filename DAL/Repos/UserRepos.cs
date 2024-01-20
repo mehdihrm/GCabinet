@@ -1,12 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DAL.Entity;
 
 namespace DAL.Repos
 {
-    internal class UserRepos
+    public class UserRepos
     {
+        private MyDbContext dbContext = new MyDbContext();
+        public User Read(string username)
+        {
+            List<User> users = dbContext.Users.ToList();
+            User user = null;
+            foreach(User u in users)
+            {
+                if (u.Username == username)
+                {
+                   user = u;
+                    break;
+                }
+            }
+            return user;
+        }
     }
 }
