@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240123121541_UserRdvPatient")]
-    partial class UserRdvPatient
+    [Migration("20240123141942_AjoutDateNaissancePatient")]
+    partial class AjoutDateNaissancePatient
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,13 +27,22 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Entity.Patient", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Adresse")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cin")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateNaissance")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("Mutuelle")
                         .HasColumnType("bit");
@@ -57,15 +66,17 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Entity.RDV", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("DateRDV")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PatientId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("PatientId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("etatRDV")
                         .HasColumnType("bit");
