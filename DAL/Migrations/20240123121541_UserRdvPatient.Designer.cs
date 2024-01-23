@@ -12,31 +12,31 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240121214916_ModifFKTableRDV2")]
-    partial class ModifFKTableRDV2
+    [Migration("20240123121541_UserRdvPatient")]
+    partial class UserRdvPatient
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "7.0.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("DAL.Entity.Patient", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("Id");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Adresse")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateRDV")
-                        .HasColumnType("datetime2");
+                    b.Property<bool>("Mutuelle")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Nom")
                         .IsRequired()
@@ -59,15 +59,16 @@ namespace DAL.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("Id");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DateRDV")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PatientId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("etatRDV")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -80,14 +81,17 @@ namespace DAL.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("Id");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -100,9 +104,7 @@ namespace DAL.Migrations
                 {
                     b.HasOne("DAL.Entity.Patient", "Patient")
                         .WithMany()
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PatientId");
 
                     b.Navigation("Patient");
                 });

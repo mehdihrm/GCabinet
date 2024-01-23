@@ -10,37 +10,38 @@ namespace DAL.Repos
 {
     public class PatientRepos
     {
+        private MyDbContext db = new MyDbContext();
         public void Create(Patient entite)
         {
-            MyDbContext db = new MyDbContext();
+
             db.patient.Add(entite);
             db.SaveChanges();
         }
 
         public Patient Read(int id)
         {
-            MyDbContext db = new MyDbContext();
+
             var entite = db.patient.Find(id);
             return entite;
         }
 
         public List<Patient> All()
         {
-            MyDbContext db = new MyDbContext();
+
             return db.patient.ToList();
         }
 
         public void Delete(int id)
         {
-            MyDbContext dbContext = new MyDbContext();
-            var obj = dbContext.patient.Find(id);
-            dbContext.patient.Remove(obj);
+
+            var obj = db.patient.Find(id);
+            db.patient.Remove(obj);
         }
 
         public void Update(Patient entite)
         {
-            MyDbContext dbContext = new MyDbContext();
-            dbContext.patient.Update(entite);
+
+            db.patient.Update(entite);
         }
 
     }

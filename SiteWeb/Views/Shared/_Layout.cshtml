@@ -13,11 +13,11 @@
     <!-- Custom styles for this template-->
     <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
 
-    <style>
+@*    <style>
         .custom-sidebar {
         background: linear-gradient(to bottom, #00b894, #018d69); /* Dégradé de couleurs */
 }
-    </style>
+    </style>*@
 </head>
 <body id="page-top">
    @* <header>
@@ -43,7 +43,7 @@
     </header>*@
     <div id="wrapper">
         <!-- Sidebar -->
-        <ul class="navbar-nav col-2 sidebar sidebar-dark accordion custom-sidebar" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-area="" asp-controller="Home" asp-action="Index">
@@ -76,21 +76,21 @@
             <li class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="Patient" asp-action="Index">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span style="font-size: 20px">Patients</span>
+                    <span >Patients</span>
                 </a>
             </li>
             <!-- Nav Item - CRUD RDV -->
             <li class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="RDV" asp-action="Index">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span style="font-size: 20px">Rendez-vous</span>
+                    <span >Rendez-vous</span>
                 </a>
             </li>
             <!-- Nav Item - LISTE Patients + RDV -->
             <li class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span style="font-size: 20px">Liste</span>
+                    <span >Liste</span>
                 </a>
             </li>
 
@@ -99,7 +99,7 @@
             <li class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span style="font-size: 20px">USERS</span>
+                    <span >Users</span>
                 </a>
             </li>
 
