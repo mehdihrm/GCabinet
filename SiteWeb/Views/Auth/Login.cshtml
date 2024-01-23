@@ -44,8 +44,8 @@
                                 </div>
                                 @if (ViewData["ValidateMessage"] != null)
                                 {
-                                    <div class="mb-4">
-                                        <p>@ViewData["ValidateMessage"]</p>
+                                    <div class="alert alert-danger" role="alert">
+                                        @ViewData["ValidateMessage"]
                                     </div>
                                 }
                                 <div class="d-flex mb-5 align-items-center">

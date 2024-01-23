@@ -48,7 +48,7 @@ namespace SiteWeb.Controllers
             }
             else
             {
-                ViewData["ValidateMessage"] = "user not found";
+                ViewData["ValidateMessage"] = "Username ou mot de passe incorrect !";
             }
 
             
