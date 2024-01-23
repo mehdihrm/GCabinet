@@ -13,10 +13,9 @@ namespace DAL.Entity
     {
 
         [Key]
-        [Column(name: "Id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
-        public Patient Patient { get; set; }
+        public Patient? Patient { get; set; }
         public DateTime DateRDV { get; set; }
         public bool etatRDV { get; set; }
     }
