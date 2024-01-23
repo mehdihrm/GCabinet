@@ -24,10 +24,24 @@ namespace DAL.Repos
             var entite = db.patient.Find(id);
             return entite;
         }
+        public Patient findPatient(string cin)
+        {
+            List<Patient> liste = this.All();
+            Patient patient = null;   
+            foreach(Patient p in liste)
+            {
+                if(p.Cin == cin)
+                {
+                    patient = p;
+                    break;
+                }
+
+            }
+            return patient;
+        }
 
         public List<Patient> All()
         {
-
             return db.patient.ToList();
         }
 

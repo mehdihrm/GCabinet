@@ -14,7 +14,7 @@ namespace DAL.Entity
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Id { get; set; }
+        public int Id { get; set; }
         public Patient? Patient { get; set; }
         public DateTime DateRDV { get; set; }
         public bool etatRDV { get; set; }
