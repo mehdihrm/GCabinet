@@ -21,8 +21,8 @@
 </head>
 <body>
     <div class="content">
-        <div class="container">
-            <div class="row">
+        <div class="container-fluid h-80 ">
+            <div class="row justify-content-center align-items-center">
                 <div class="col-md-6">
                     <img src="~/img/undraw_remotely_2j6y.svg" alt="Image" class="img-fluid">
                 </div>
@@ -30,7 +30,7 @@
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <div class="mb-4">
-                                <h3>Connexion</h3>
+                                <center><h3 class="fw-bold">Connexion</h3></center>
                                 <p class="mb-4">Gestion de Cabinet.</p>
                             </div>
                             <form asp-controller="Auth" asp-action="Login" method="post">
