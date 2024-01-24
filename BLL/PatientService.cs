@@ -59,5 +59,47 @@ namespace BLL
             }
             return listePatVM;
         }
+
+        public PatientVM getPatient(int id)
+        {
+            Patient p = patientRepos.Read(id);
+            PatientVM patient = new PatientVM()
+            {
+                Id = p.Id,
+                Nom = p.Nom,
+                Ville = p.Ville,
+                Adresse = p.Adresse,
+                Cin = p.Cin,
+                Mutuelle = p.Mutuelle,
+                DateNaissance = p.DateNaissance,
+                Prenom = p.Prenom
+            };
+            return patient;
+        }
+        public bool updatePatient(PatientVM patientVm)
+        {
+            Patient p = patientRepos.Read(patientVm.Id);
+            
+            if(patientRepos.findPatient(patientVm.Cin) == null || patientRepos.findPatient(patientVm.Cin).Id == patientVm.Id)
+            {
+                p.Nom = patientVm.Nom;
+                p.Prenom = patientVm.Prenom;
+                p.Ville = patientVm.Ville;  
+                p.Mutuelle = patientVm.Mutuelle;
+                p.Cin = patientVm.Cin;
+                p.DateNaissance = patientVm.DateNaissance;
+                patientRepos.Update(p);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void deletePatient(PatientVM patientVm)
+        {
+            patientRepos.Delete(patientVm.Id);
+        }
     }
 }

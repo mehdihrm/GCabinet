@@ -15,7 +15,7 @@
         </div>
         @if (ViewData["ValidateMessage"] != null)
         {
-            @if(ViewData["ValidateMessage"] == "existant")
+            if(ViewData["ValidateMessage"] == "existant")
             {
                 <div class="alert alert-danger" role="alert">
                     Erreur, patient existe déjà
@@ -23,9 +23,19 @@
             }
             else
             {
-                <div class="alert alert-success" role="alert">
-                    Patient ajouté avec succès !
-                </div>
+                if (ViewData["ValidateMessage"] == "succèsMaj")
+                {
+                    <div class="alert alert-success" role="alert">
+                        Patient modifié avec succès !
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-success" role="alert">
+                        Patient ajouté avec succès !
+                    </div>
+                }
+
             }
 
         }
@@ -58,8 +68,10 @@
                             <td>@item.Mutuelle</td>
                     <td>
                         <!-- Boutons CRUD -->
-                        <button type="button" class="btn btn-primary btn-sm mx-1">Modifier</button>
-                        <button type="button" class="btn btn-danger btn-sm mx-1">Supprimer</button>
+                        <form asp-controller="Patient" asp-action="ModifierPatient" method="post">
+                                    <input type="hidden" name="patientId" value="@item.Id" />
+                                    <button type="submit" onclick="afficherModal(@item.Id)" class="btn btn-primary btn-sm mx-1">Modifier - Supprimer</button>
+                        </form>
                     </td>
                 </tr>
                     }
@@ -136,6 +148,33 @@
     </div>
 </div>
 
+    <!-- Modal de modification de patient -->
+    <div class="modal fade" id="modifierPatientModal" tabindex="-1" aria-labelledby="modifierPatientModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ajouterPatientModalLabel">Modifier le patient</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulaire de modif de patient -->
+                    <form asp-controller="Patient" asp-action="AddPatient" method="post">
+                            @Html.Partial("_ModifierPatient")
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+@section Scripts {
+    <script>
+        function afficherModal(patientId) {
+            // Soumettre le formulaire correspondant au clic du bouton "Modifier"
+            $('#formModifier-' + patientId).submit();
+        }
+    </script>
+}
