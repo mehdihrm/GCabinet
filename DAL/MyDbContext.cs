@@ -19,7 +19,7 @@ namespace DAL
            (DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer
-                (@"Data Source=localhost\SQLEXPRESS;Initial Catalog=GCabinetDB;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True");
+                (@"Data Source=.\SQLEXPRESS;Initial Catalog=GCabinetDB;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True");
         }
     }
 }

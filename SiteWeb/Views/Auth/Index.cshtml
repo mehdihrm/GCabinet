@@ -1,0 +1,171 @@
+﻿@model UserViewModel;
+
+
+<title>Cabinet Dentaire - Gestion des Patients</title>
+
+<body>
+
+    <div class="container mt-5">
+        <center><h2 class="mb-4">Liste des Utilisateurs</h2></center>
+        
+       
+        
+        @if (ViewData["ValidateMessage"] != null)
+        {
+            if (ViewData["ValidateMessage"] == "existant")
+            {
+                <div class="alert alert-danger" role="alert">
+                    Erreur, utilisateur existe déjà
+                </div>
+            }
+            else
+            {
+                if (ViewData["ValidateMessage"] == "succèsMaj")
+                {
+                    <div class="alert alert-success" role="alert">
+                        Utilisateur modifié avec succès !
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-success" role="alert">
+                        Utilisateur ajouté avec succès !
+                    </div>
+                }
+
+            }
+
+        }
+
+        <!-- Tableau Grid Bootstrap -->
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Mot de passe</th>
+
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ListeUser)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Username</td>
+                            <td>@item.email</td>
+                            <td>@item.Password</td>
+
+                            <td>
+                                <!-- Boutons CRUD -->
+                                <form asp-controller="Auth" asp-action="ModifierUser" method="post">
+                                    <input type="hidden" name="UserId" value="@item.Id" />
+                                    <button type="submit" onclick="afficherModal(@item.Id)" class="btn btn-primary btn-sm mx-1">Modifier - Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Bouton Ajouter -->
+        <div class="d-flex justify-content-center mb-4">
+            <!-- Utilise justify-content-center pour centrer -->
+            <button type="button" class="btn btn-success btn-lg mx-2" data-bs-toggle="modal" data-bs-target="#ajouterUserModal">
+                Ajouter
+            </button>
+        </div>
+
+
+        <!-- Modal d'ajout User -->
+        <div class="modal fade" id="ajouterUserModal" tabindex="-1" aria-labelledby="ajouterUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ajouterUserModalLabel">Enregistrer un Utilisateur</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Formulaire d'ajout de patient -->
+                        <form asp-controller="Auth" asp-action="ListeUserADD" method="post">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input asp-for="@Model.newUser.Username" required type="text" class="form-control" id="username" placeholder="Entrez le Username">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input asp-for="@Model.newUser.email" required type="text" class="form-control" id="email" placeholder="Entrez l'email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="nom" class="form-label">PassWord</label>
+                                <input asp-for="@Model.newUser.Password" required type="text" class="form-control" id="pass" placeholder="Entrez le mot de passe">
+                            </div>
+
+
+                            <br /><br />
+                            <hr />
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-success btn-lg">Enregistrer un Utilisateur</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de modification user -->
+    <div class="modal fade" id="modifierUserModal" tabindex="-1" aria-labelledby="modifierUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ajouterUserModalLabel">Modifier l'Utilisateur</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulaire de modif de patient -->
+                    <form asp-controller="Auth" asp-action="ListeUserADD" method="post">
+                        @Html.Partial("ModifierUser")
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<!--  script js ici -->
+@section Scripts {
+    <script>
+        function afficherModal(Id) {
+            // Soumettre le formulaire correspondant au clic du bouton "Modifier"
+            $('#formModifier-' + Id).submit();
+        }
+    </script>
+}
