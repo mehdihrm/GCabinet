@@ -12,7 +12,14 @@ namespace SiteWeb.Controllers
         {
             ClaimsPrincipal claimUser = HttpContext.User;
             ViewData["CurrentUsername"] = claimUser.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            return View();
+            
+            RdvViewModel viewModel = new RdvViewModel()
+            {
+                newrd = new RdvVM(),
+                Listerdv = service.getAllRDV()
+
+            };
+            return View(viewModel);
         }
 
         private RdvService service = new RdvService();

@@ -53,7 +53,6 @@ namespace DAL.Repos
 
         public void Delete(int id)
         {
-
             User u = this.Read2(id);
             dbContext.Users.Remove(u);
             dbContext.SaveChanges();
