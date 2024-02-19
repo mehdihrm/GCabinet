@@ -14,7 +14,7 @@ namespace DAL.Entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Cin { get; set; }
+        public string Cin { get; set; } = string.Empty;
         public string Nom { get; set; } = string.Empty;
         public string Prenom { get; set; } = string.Empty;
         public DateTime DateNaissance { get; set; }

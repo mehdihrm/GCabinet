@@ -40,5 +40,10 @@ namespace DAL.Repos
         {
             db.RDV.Update(entite);
         }
+        public RDV findrdv(int id)
+        {
+            RDV r = this.All().Where(p => p.Id == id).FirstOrDefault();
+            return r;
+        }
     }
 }

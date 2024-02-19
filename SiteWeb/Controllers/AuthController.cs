@@ -12,7 +12,7 @@ namespace SiteWeb.Controllers
         public IActionResult Login()
         {
             ClaimsPrincipal claimUser = HttpContext.User;
-            if(claimUser.Identity.IsAuthenticated)
+            if (claimUser.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
             return View();
         }
@@ -24,7 +24,7 @@ namespace SiteWeb.Controllers
             if (authService.authentifyUser(userLogin))
             //if(userLogin.Username == "admin" && userLogin.Password=="admin")
             {
-                
+
                 List<Claim> claims = new List<Claim>()
                 {
                     new Claim(ClaimTypes.NameIdentifier,userLogin.Username),
@@ -33,7 +33,7 @@ namespace SiteWeb.Controllers
 
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims,
                     CookieAuthenticationDefaults.AuthenticationScheme);
-                
+
                 AuthenticationProperties properties = new AuthenticationProperties()
                 {
                     AllowRefresh = true,
@@ -51,7 +51,7 @@ namespace SiteWeb.Controllers
                 ViewData["ValidateMessage"] = "Username ou mot de passe incorrect !";
             }
 
-            
+
             return View();
         }
     }

@@ -11,6 +11,7 @@ namespace SiteWeb.Controllers
     public class PatientController : Controller
     {
         private PatientService patientService = new PatientService();
+
         public ActionResult Index()
         {
             ClaimsPrincipal claimUser = HttpContext.User;
@@ -76,6 +77,7 @@ namespace SiteWeb.Controllers
                 Patients = patientService.getAllPatients()
 
             };
+            
             return View("_ModifierPatient", viewModel);
         }
 

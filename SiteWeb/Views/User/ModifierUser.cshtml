@@ -1,0 +1,35 @@
+﻿@model UserViewModel
+<div class="container mt-5">
+    <form asp-controller="User" asp-action="ModifUser" method="post">
+        <div class="mb-3">
+            <input type="hidden" asp-for="@Model.newUser.Id" />
+            <label for="username" class="form-label">Username</label>
+            <input asp-for="@Model.newUser.Username" required type="text" class="form-control" id="username" placeholder="Entrez le nouveau Username ">
+        </div>
+        <div class="mb-3">
+            <label for="Email" class="form-label">Email</label>
+            <input asp-for="@Model.newUser.email" required type="text" class="form-control" id="Email" placeholder="Entrez le nouveau email">
+        </div>
+        <div class="mb-3">
+            <label for="pass" class="form-label">PassWord</label>
+            <input asp-for="@Model.newUser.Password" required type="text" class="form-control" id="pass" placeholder="Entrez le nouveau mot de passe">
+        </div>
+       
+        <br />
+        <br />
+        <hr />
+        <div class="text-center">
+            <button type="submit" class="btn btn-success btn-lg">Modifier un Patient</button>
+            <button class="btn btn-dark btn-lg" asp-controller="User" asp-action="Index">Annuler</button>
+            <button asp-controller="User" asp-action="SupprimerUser" class="btn btn-danger btn-lg" onclick="return confirm('Are you sure you want to delete this ?')">Supprimer</button>
+            
+        </div>
+    </form>
+
+</div>
+
+<br />
+<br />
+<br />
+
+

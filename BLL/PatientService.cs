@@ -79,7 +79,7 @@ namespace BLL
         public bool updatePatient(PatientVM patientVm)
         {
             Patient p = patientRepos.Read(patientVm.Id);
-            
+            // Modifier si cin = cin du mêmme patient ou modifier si on mmet un new cin
             if(patientRepos.findPatient(patientVm.Cin) == null || patientRepos.findPatient(patientVm.Cin).Id == patientVm.Id)
             {
                 p.Nom = patientVm.Nom;
@@ -101,5 +101,7 @@ namespace BLL
         {
             patientRepos.Delete(patientVm.Id);
         }
+
+        
     }
 }
