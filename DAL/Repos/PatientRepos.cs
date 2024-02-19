@@ -60,5 +60,10 @@ namespace DAL.Repos
             db.SaveChanges();
         }
 
+        public int NombrePatients()
+        {
+            int nombrePatients = db.patient.Count();
+            return nombrePatients;
+        }
     }
 }

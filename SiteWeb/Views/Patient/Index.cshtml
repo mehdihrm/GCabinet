@@ -7,12 +7,7 @@
 
 <div class="container mt-5">
     <h2 class="mb-4">Liste des Patients</h2>
-        <!-- Bouton Ajouter -->
-        <div class="d-flex justify-content-end mb-4">
-            <button type="button" class="btn btn-success mx-2" data-bs-toggle="modal" data-bs-target="#ajouterPatientModal">
-                Ajouter
-            </button>
-        </div>
+       
         @if (ViewData["ValidateMessage"] != null)
         {
             if(ViewData["ValidateMessage"] == "existant")
@@ -79,6 +74,12 @@
         </table>
     </div>
 
+        <!-- Bouton Ajouter -->
+        <div class="d-flex justify-content-center mb-4">
+            <button type="button" class="btn btn-success btn-lg mx-2" data-bs-toggle="modal" data-bs-target="#ajouterPatientModal">
+                Ajouter
+            </button>
+        </div>
 
 
     <!-- Modal d'ajout de patient -->
