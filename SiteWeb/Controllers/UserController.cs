@@ -8,7 +8,7 @@ namespace SiteWeb.Controllers
 {
     public class UserController : Controller
     {
-        private AuthService service = new AuthService();
+        private UserService userService = new UserService();
         public IActionResult Index()
         {
             ClaimsPrincipal claimUser = HttpContext.User;
@@ -17,7 +17,7 @@ namespace SiteWeb.Controllers
             UserViewModel viewModel = new UserViewModel()
             {
                 newUser = new UserAuthVM(),
-                ListeUser = service.getAllUsers()
+                ListeUser = userService.getAllUsers()
 
             };
             return View(viewModel);
@@ -28,7 +28,7 @@ namespace SiteWeb.Controllers
         public async Task<ActionResult> ListeUserADD(UserViewModel user)
         {
 
-            if (service.ajouterUser(user.newUser))
+            if (userService.ajouterUser(user.newUser))
             {
                 ViewData["ValidateMessage"] = "succès";
             }
@@ -40,7 +40,7 @@ namespace SiteWeb.Controllers
             UserViewModel viewModel = new UserViewModel()
             {
                 newUser = new UserAuthVM(),
-                ListeUser = service.getAllUsers()
+                ListeUser = userService.getAllUsers()
 
             };
 
@@ -50,11 +50,11 @@ namespace SiteWeb.Controllers
 
         public ActionResult SupprimerUser(UserViewModel user)
         {
-            service.deleteUser(user.newUser);
+            userService.deleteUser(user.newUser);
             UserViewModel viewModel = new UserViewModel()
             {
                 newUser = new UserAuthVM(),
-                ListeUser = service.getAllUsers()
+                ListeUser = userService.getAllUsers()
 
             };
             return View("Index", viewModel);
@@ -64,7 +64,7 @@ namespace SiteWeb.Controllers
         [HttpPost]
         public async Task<ActionResult> ModifUser(UserViewModel user)
         {
-            if (service.updateUser(user.newUser))
+            if (userService.updateUser(user.newUser))
             {
                 ViewData["ValidateMessage"] = "succèsMaj";
             }
@@ -75,7 +75,7 @@ namespace SiteWeb.Controllers
             UserViewModel viewModel = new UserViewModel()
             {
                 newUser = new UserAuthVM(),
-                ListeUser = service.getAllUsers()
+                ListeUser = userService.getAllUsers()
 
             };
             return View("Index", viewModel);
@@ -84,23 +84,16 @@ namespace SiteWeb.Controllers
         [HttpPost]
         public IActionResult ModifierUser(int UserId)
         {
-            UserAuthVM user = service.getUser(UserId);
-
-            if (user != null)
-            {
+                UserAuthVM user = userService.getUser(UserId);
                 UserViewModel viewModel = new UserViewModel()
                 {
                     newUser = user,
-                    ListeUser = service.getAllUsers()
+                    ListeUser = userService.getAllUsers()
                 };
 
                 return View("ModifierUser", viewModel);
-            }
-            else
-            {
-                // Gérer le cas où l'utilisateur n'est pas trouvé
-                return RedirectToAction("Index"); // Rediriger vers la vue par défaut ou une vue d'erreur
-            }
+            
+
         }
     }
 }

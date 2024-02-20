@@ -19,7 +19,7 @@ namespace DAL.Repos
             }
             return user;
         }
-        public User Read2(int id)
+        public User ReadById(int id)
         {
             List<User> users = dbContext.Users.ToList();
             User user = null;
@@ -53,7 +53,7 @@ namespace DAL.Repos
 
         public void Delete(int id)
         {
-            User u = this.Read2(id);
+            User u = this.ReadById(id);
             dbContext.Users.Remove(u);
             dbContext.SaveChanges();
         }
