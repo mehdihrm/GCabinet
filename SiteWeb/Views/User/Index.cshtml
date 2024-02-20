@@ -45,7 +45,6 @@
                         <th scope="col">ID</th>
                         <th scope="col">Username</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Mot de passe</th>
 
                         <th scope="col">Actions</th>
                     </tr>
@@ -57,7 +56,6 @@
                             <td>@item.Id</td>
                             <td>@item.Username</td>
                             <td>@item.email</td>
-                            <td>@item.Password</td>
 
                             <td>
                                 <!-- Boutons CRUD -->
@@ -93,23 +91,23 @@
                         <!-- Formulaire d'ajout de patient -->
                         <form asp-controller="User" asp-action="ListeUserADD" method="post">
                             <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input asp-for="@Model.newUser.Username" required type="text" class="form-control" id="username" placeholder="Entrez le Username">
+                                <label for="username" class="form-label">Nom d'utilisateur'</label>
+                                <input asp-for="@Model.newUser.Username" required type="text" class="form-control" id="username" placeholder="Entrez le nomm d'utilisateur'">
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input asp-for="@Model.newUser.email" required type="text" class="form-control" id="email" placeholder="Entrez l'email">
+                                <input asp-for="@Model.newUser.email" required type="email" class="form-control" id="email" placeholder="Entrez l'email">
                             </div>
                             <div class="mb-3">
                                 <label for="nom" class="form-label">PassWord</label>
-                                <input asp-for="@Model.newUser.Password" required type="text" class="form-control" id="pass" placeholder="Entrez le mot de passe">
+                                <input asp-for="@Model.newUser.Password" required type="password" class="form-control" id="pass" placeholder="Entrez le mot de passe">
                             </div>
 
 
                             <br /><br />
                             <hr />
                             <div class="text-center">
-                                <button type="submit" class="btn btn-success btn-lg">Enregistrer un Utilisateur</button>
+                                <button type="submit" class="btn btn-success btn-lg">Ajouter un utilisateur</button>
                             </div>
                         </form>
                     </div>
