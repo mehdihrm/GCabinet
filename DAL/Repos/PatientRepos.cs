@@ -20,9 +20,8 @@ namespace DAL.Repos
 
         public Patient Read(int id)
         {
-
-            var entite = db.patient.Find(id);
-            return entite;
+            Patient p = db.patient.Find(id);
+            return p;
         }
         public Patient findPatient(string cin)
         {

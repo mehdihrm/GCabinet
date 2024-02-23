@@ -6,14 +6,14 @@
 <body>
 
     <div class="container mt-5">
-        <h2 class="mb-4">Liste des Patients</h2>
+        <h2 class="mb-4">Liste des rendez-vous</h2>
 
         @if (ViewData["ValidateMessage"] != null)
         {
             if (ViewData["ValidateMessage"] == "existant")
             {
                 <div class="alert alert-danger" role="alert">
-                    Erreur, patient existe déjà
+                    Erreur, le patient à peut-être déjà un rendez-vous !
                 </div>
             }
             else
@@ -21,18 +21,18 @@
                 if (ViewData["ValidateMessage"] == "succèsMaj")
                 {
                     <div class="alert alert-success" role="alert">
-                        Patient modifié avec succès !
+                        Rendez-vous modifié avec succès !
                     </div>
                 }
                 else
                 {
                     <div class="alert alert-success" role="alert">
-                        Patient ajouté avec succès !
+                        Rendez-vous ajouté avec succès !
                     </div>
-                }
+                }  
 
             }
-
+            
         }
 
         <!-- Tableau Grid Bootstrap -->
@@ -44,8 +44,8 @@
                         
                         <th scope="col">Patient</th>
                         
-                        <th scope="col">Date RDV</th>
-                        <th scope="col">Etat du RDV</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Etat</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -57,10 +57,18 @@
                             <tr>
                                 <td>@item.Id</td>
                                 
-                                <td>@item.Patient.Nom</td>
+                                <td>@item.patient.Nom @item.patient.Prenom</td>
                                 
-                                <td>@item.etatRDV</td>
-                                <td>@item.DateRDV</td>
+                                @if(item.etatRDV == false)
+                                {
+                                    <td>En attente </td>
+                                }
+                                else{
+                                    <td style="color: green;">Confirmé</td>
+
+                                    
+                                    }
+                                    <td>@item.DateRDV.Date</td>
                                 <td>
                                     <!-- Boutons CRUD -->
                                     <form asp-controller="RDV" asp-action="ModifierRdv" method="post">
@@ -96,8 +104,13 @@
                         <!-- Formulaire d'ajout -->
                         <form asp-controller="RDV" asp-action="ListeRdvADD" method="post">
                             <div class="mb-3">
-                                <label for="id" class="form-label">Patient</label>
-                                <input asp-for="@Model.newrd.Patient" required type="text" class="form-control" id="id" placeholder="Entrez la CIN du Patient">
+                                <label for="patient" class="form-label">Patient</label>
+                                <select asp-for="@Model.newrd.PatientId" class="form-select">
+                                    @foreach ( var item in Model.Patients)
+                                    {
+                                        <option value="@item.Id">@item.Nom @item.Prenom</option>
+                                    }
+                                </select>
                             </div>
                             
                             <div class="mb-3">
@@ -106,8 +119,17 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="nom" class="form-label">Etat du rendez-vous</label>
-                                <input asp-for="@Model.newrd.etatRDV" required type="text" class="form-control" id="nom" placeholder="Etat du rendez-vous">
+                                <label for="EtatRdv" class="form-label">Etat du rendez-vous</label>
+                                <div id="EtatRdv" class="form-check d-flex justify-content-center">
+                                    <div class="form-check">
+                                        <input asp-for="@Model.newrd.etatRDV" class="form-check-input" type="radio" value="true">
+                                        <label class="form-check-label" for="etatConf" style="margin-right:10px">Confirmé</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input asp-for="@Model.newrd.etatRDV" class="form-check-input" type="radio" value="false">
+                                        <label class="form-check-label" for="etatAtt" style="margin-right:10px">En attente</label>
+                                    </div>
+                                </div>
                             </div>
                             
                             <br /><br />
@@ -133,7 +155,7 @@
                 <div class="modal-body">
                     <!-- Formulaire de modif de patient -->
                     <form asp-controller="RDV" asp-action="ListeRdvADD" method="post">
-                        @Html.Partial("modifierRDV")
+                        @Html.Partial("_ModifierRdv")
                     </form>
                 </div>
             </div>

@@ -22,7 +22,7 @@ namespace DAL.Entity
         public string Adresse { get; set; } = string.Empty;
         public bool Mutuelle { get; set; }
 
-
+        //public List<RDV> RDVs { get; set; }
 
     }
 }

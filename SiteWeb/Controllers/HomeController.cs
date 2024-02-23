@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using BLL;
 
 namespace SiteWeb.Controllers
 {
@@ -12,7 +13,8 @@ namespace SiteWeb.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
+        public PatientService patientService = new PatientService();
+        public RdvService rdvService = new RdvService();
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -22,6 +24,9 @@ namespace SiteWeb.Controllers
         {
             ClaimsPrincipal claimUser = HttpContext.User;
             ViewData["CurrentUsername"] = claimUser.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            ViewBag.NbRdvDuJour = rdvService.rdvsDuJour();
+            ViewBag.RdvAConf = rdvService.rdvAConf();
+            ViewBag.NbPatients = patientService.getAllPatients().Count;
             return View();
         }
 

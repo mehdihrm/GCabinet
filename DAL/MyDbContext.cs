@@ -14,6 +14,8 @@ namespace DAL
         public DbSet<RDV> RDV { get; set; }
         public DbSet<Patient> patient { get; set; }
 
+     
+
 
         protected override void OnConfiguring
            (DbContextOptionsBuilder optionsBuilder)

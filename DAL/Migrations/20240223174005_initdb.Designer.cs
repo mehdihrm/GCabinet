@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240220125806_initdb")]
+    [Migration("20240223174005_initdb")]
     partial class initdb
     {
         /// <inheritdoc />
@@ -75,7 +75,7 @@ namespace DAL.Migrations
                     b.Property<DateTime>("DateRDV")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("PatientId")
+                    b.Property<int>("PatientId")
                         .HasColumnType("int");
 
                     b.Property<bool>("etatRDV")
@@ -83,9 +83,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PatientId");
-
-                    b.ToTable("RDV");
+                    b.ToTable("T_RDV");
                 });
 
             modelBuilder.Entity("DAL.Entity.User", b =>
@@ -111,15 +109,6 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("T_User");
-                });
-
-            modelBuilder.Entity("DAL.Entity.RDV", b =>
-                {
-                    b.HasOne("DAL.Entity.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId");
-
-                    b.Navigation("Patient");
                 });
 #pragma warning restore 612, 618
         }

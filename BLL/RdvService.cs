@@ -12,40 +12,53 @@ namespace BLL
     public class RdvService
     {
         private RDVRepos rdvRepos = new RDVRepos();
+        private PatientRepos patientRepos = new PatientRepos();
 
         public bool addRdv(RdvVM rdvVm)
         {
-
-            if (rdvRepos.findrdv(rdvVm.Id) == null && rdvVm.DateRDV < DateTime.Now)
+            List<RDV> allRdvs = rdvRepos.All();
+            bool found = false;
+            foreach(RDV r in allRdvs)
             {
-
-                RDV rd = new RDV()
+                if(r.PatientId == rdvVm.PatientId && r.DateRDV == rdvVm.DateRDV)
                 {
-                    Patient=rdvVm.Patient,
-                    etatRDV=rdvVm.etatRDV,
-                    DateRDV=rdvVm.DateRDV,
+                    found = true;
+                    break;
+                }
+            }
 
+            if (found == false && rdvVm.DateRDV >= DateTime.Now)
+            {
+                RDV rdv = new RDV()
+                {
+                    PatientId = rdvVm.PatientId,
+                    DateRDV = rdvVm.DateRDV,
+                    etatRDV = rdvVm.etatRDV
                 };
-                rdvRepos.Create(rd);
+                rdvRepos.Create(rdv);
                 return true;
             }
             else
-            {
                 return false;
-            }
+                
+
+                
+
+
 
         }
 
         public List<RdvVM> getAllRDV()
         {
-            List<RDV> listerd = rdvRepos.All();
+            List<RDV> listerdv = rdvRepos.All();
             List<RdvVM> listeRdVM = new List<RdvVM>();
-            foreach (RDV rd in listerd)
-            {
+            foreach (RDV rd in listerdv)
+            { 
                 RdvVM r = new RdvVM()
                 {
                     Id = rd.Id,
-                    Patient=rd.Patient,
+                    patient = patientRepos.Read(rd.PatientId),
+                    PatientId = rd.PatientId,
                     DateRDV=rd.DateRDV,
                     etatRDV =rd.etatRDV,
                 };
@@ -54,13 +67,15 @@ namespace BLL
             return listeRdVM;
         }
 
-        public RdvVM getrd(int id)
+        public RdvVM getrdv(int id)
         {
-            RDV r = rdvRepos.Read(id);
+            RDV r = rdvRepos.findrdv(id);
+
             RdvVM rd = new RdvVM()
             {
                 Id = r.Id,
-                Patient = r.Patient,
+                PatientId = r.PatientId,
+                patient =patientRepos.Read(r.PatientId),
                 DateRDV = r.DateRDV,
                 etatRDV = r.etatRDV,
             };
@@ -69,18 +84,15 @@ namespace BLL
 
         public bool updateRDV(RdvVM rdVm)
         {
-            RDV r = rdvRepos.Read(rdVm.Id);
-            
-            if (rdvRepos.findrdv(rdVm.Id) == null)
+            RDV modifiedRdv = rdvRepos.Read(rdVm.Id);
+            if (modifiedRdv != null)
             {
-                r.Patient=rdVm.Patient;
-                r.etatRDV= rdVm.etatRDV;
-                r.DateRDV= rdVm.DateRDV;
-
-                rdvRepos.Update(r);
+                modifiedRdv.PatientId = rdVm.PatientId;
+                modifiedRdv.DateRDV = rdVm.DateRDV;
+                modifiedRdv.etatRDV = rdVm.etatRDV;
+                rdvRepos.Update(modifiedRdv);
                 return true;
-            }
-            else
+            }else
             {
                 return false;
             }
@@ -89,6 +101,24 @@ namespace BLL
         public void deleteRDV(RdvVM rdVm)
         {
             rdvRepos.Delete(rdVm.Id);
+        }
+        public int rdvsDuJour()
+        {
+            int cnt = 0;
+            foreach(RDV r in rdvRepos.All())
+            {
+                if (r.DateRDV.Date == DateTime.Now.Date) cnt++;
+            }
+            return cnt;
+        }
+        public int rdvAConf()
+        {
+            int cnt = 0;
+            foreach (RDV r in rdvRepos.All())
+            {
+                if (r.etatRDV == false) cnt++;
+            }
+            return cnt;
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repos
 {
@@ -19,8 +20,8 @@ namespace DAL.Repos
         public RDV Read(int id)
         {
 
-            var entite = db.RDV.Find(id);
-            return entite;
+            RDV rdv = db.RDV.Find(id);
+            return rdv;
         }
 
         public List<RDV> All()
@@ -34,16 +35,20 @@ namespace DAL.Repos
  
             var obj = db.RDV.Find(id);
             db.RDV.Remove(obj);
+            db.SaveChanges();
+
         }
 
         public void Update(RDV entite)
         {
             db.RDV.Update(entite);
+            db.SaveChanges();
         }
         public RDV findrdv(int id)
         {
-            RDV r = this.All().Where(p => p.Id == id).FirstOrDefault();
-            return r;
+
+            RDV rdv = this.All().Where(r => r.Id == id).FirstOrDefault();
+            return rdv;
         }
     }
 }
