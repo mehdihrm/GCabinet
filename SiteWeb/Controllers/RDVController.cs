@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DAL.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using SiteWeb.Models;
@@ -12,23 +13,25 @@ namespace SiteWeb.Controllers
         {
             ClaimsPrincipal claimUser = HttpContext.User;
             ViewData["CurrentUsername"] = claimUser.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            
+
             RdvViewModel viewModel = new RdvViewModel()
             {
                 newrd = new RdvVM(),
-                Listerdv = service.getAllRDV()
+                Listerdv = Rdvservice.getAllRDV(),
+                Patients = PatientService.getAllPatients()
 
             };
             return View(viewModel);
         }
 
-        private RdvService service = new RdvService();
+        private RdvService Rdvservice = new RdvService();
+        private PatientService PatientService = new PatientService();
 
         [HttpPost]
-        public async Task<ActionResult> ListeRdvADD(RdvViewModel user)
+        public async Task<ActionResult> ListeRdvADD(RdvViewModel rdv)
         {
 
-            if (service.addRdv(user.newrd))
+            if (Rdvservice.addRdv(rdv.newrd))
             {
                 ViewData["ValidateMessage"] = "succès";
             }
@@ -36,11 +39,13 @@ namespace SiteWeb.Controllers
             {
                 ViewData["ValidateMessage"] = "existant";
             }
-
+           
+ 
             RdvViewModel viewModel = new RdvViewModel()
             {
                 newrd = new RdvVM(),
-                Listerdv = service.getAllRDV()
+                Listerdv = Rdvservice.getAllRDV(),
+                Patients = PatientService.getAllPatients()
 
             };
 
@@ -50,20 +55,23 @@ namespace SiteWeb.Controllers
 
         public ActionResult SupprimerRdv(RdvViewModel rd)
         {
-            service.deleteRDV(rd.newrd);
+            Rdvservice.deleteRDV(rd.newrd);
             RdvViewModel viewModel = new RdvViewModel()
             {
                 newrd = new RdvVM(),
-                Listerdv = service.getAllRDV()
+                Listerdv = Rdvservice.getAllRDV(),
+                Patients = PatientService.getAllPatients()
+
+
 
             };
             return View("Index", viewModel);
         }
 
         [HttpPost]
-        public async Task<ActionResult> ModifRdv(RdvViewModel rd)
+        public async Task<ActionResult> ModifRdv(RdvViewModel rdv)
         {
-            if (service.updateRDV(rd.newrd))
+            if (Rdvservice.updateRDV(rdv.newrd))
             {
                 ViewData["ValidateMessage"] = "succèsMaj";
             }
@@ -74,31 +82,27 @@ namespace SiteWeb.Controllers
             RdvViewModel viewModel = new RdvViewModel()
             {
                 newrd = new RdvVM(),
-                Listerdv = service.getAllRDV()
-
+                Listerdv = Rdvservice.getAllRDV(),
+                Patients = PatientService.getAllPatients()
             };
+            string message = $"Id: {rdv.newrd.Id}, PatientId : {rdv.newrd.PatientId}, date : {rdv.newrd.DateRDV}";
+            ViewBag.Message = message;
             return View("Index", viewModel);
         }
-
         [HttpPost]
-        public IActionResult ModifierRdv(int RdId)
+        public IActionResult ModifierRdv(int RdvId)
         {
-            RdvVM rd = service.getrd(RdId);
-
-            if (rd != null)
-            {
+                RdvVM rd = Rdvservice.getrdv(RdvId);
                 RdvViewModel viewModel = new RdvViewModel()
                 {
                     newrd = rd,
-                    Listerdv = service.getAllRDV()
+                    Listerdv = Rdvservice.getAllRDV(),
+                    Patients = PatientService.getAllPatients()
+
                 };
 
-                return View("ModifierRdv", viewModel);
-            }
-            else
-            {
-                return RedirectToAction("Index");
-            }
+                return View("_ModifierRdv", viewModel);
+           
         }
 
 
