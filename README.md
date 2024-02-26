@@ -1,7 +1,7 @@
 # GCabinet
 
-# Ajout de utilisateur admin dans la base de données u:admin mdp:admin
-insert into T_User values('admin','$2a$11$N.JH7vlbs3SbKqvVmpiUHuAaxjI6r3FYA1YZD9qXpPFPxellgAqkC','admin@gmail.com')
+Compte pour se connecter:
+admin:admin
 # Données démo 
 
 insert into T_Patient values ('BE28344', 'Ahmed', 'Ahmed', '2002-12-01', 'Casablanca', '23 rue la forraine', 0),
