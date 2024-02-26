@@ -80,6 +80,10 @@ namespace BLL
 
             }
         }
+        public User getUserByUsername(string username)
+        {
+            return UserRepos.findUser(username);
+        }
         public void deleteUser(UserAuthVM user)
         {
             UserRepos.Delete(user.Id);
