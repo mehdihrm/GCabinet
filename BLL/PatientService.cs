@@ -12,6 +12,7 @@ namespace BLL
     public class PatientService
     {
         private PatientRepos patientRepos = new PatientRepos();
+        private RDVRepos RDVRepos = new RDVRepos();
 
         public bool addPatient(PatientVM patientVm)
         {
@@ -100,6 +101,15 @@ namespace BLL
         public void deletePatient(PatientVM patientVm)
         {
             patientRepos.Delete(patientVm.Id);
+            List<RDV> rdvs = RDVRepos.All();
+            foreach(RDV rdv in rdvs)
+            {
+                if(rdv.PatientId == patientVm.Id)
+                {
+                    RDVRepos.Delete(rdv.Id);
+                }
+            }
+            
         }
 
         
